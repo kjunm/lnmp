@@ -1,0 +1,37 @@
+################################################
+###       environment config file            ###
+################################################
+APP_CODE_PATH_HOST=./www
+APP_CODE_PATH_CONTAINER=/var/www
+CHANGE_SOURCE=false
+DATA_PATH_HOST=~/.lnmp/data
+ALPINE_REPOSITORIES=mirrors.aliyun.com
+############# Timezone for the containers ############
+TZ=Asia/Shanghai
+WORKSPACE_TIMEZONE=UTC
+
+#################### PHP7.2 ####################
+PHP72_VERSION=7.2
+
+
+#################### Nginx #####################
+NGINX_HOST_HTTP_PORT=80
+NGINX_HOST_HTTPS_PORT=443
+NGINX_HOST_LOG_PATH=./logs/nginx/
+NGINX_SITES_PATH=./nginx/sites/
+NGINX_PHP_UPSTREAM_CONTAINER=php-fpm
+NGINX_PHP_UPSTREAM_PORT=9000
+NGINX_SSL_PATH=./nginx/ssl/
+
+### MYSQL #################################################
+MYSQL_VERSION=5.7
+MYSQL_DATABASE=default
+MYSQL_USER=wim
+MYSQL_PASSWORD=123456
+MYSQL_PORT=3306
+MYSQL_ROOT_PASSWORD=jj1218
+MYSQL_ENTRYPOINT_INITDB=./mysql/docker-entrypoint-initdb.d
+
+### REDIS #################################################
+
+REDIS_PORT=6379
