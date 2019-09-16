@@ -30,6 +30,8 @@ services:
         PHP_VERSION: ${PHP72_VERSION}
         ALPINE_REPOSITORIES: ${ALPINE_REPOSITORIES}
         TZ: "$TZ"
+        SWOOLE_VERSION: ${PHP72_SWOOLE_VERSION}
+        HIREDIS_VERSION: ${PHP72_HIREDIS_VERSION}
     container_name: wim_php
     restart: always
     volumes:

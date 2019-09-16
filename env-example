@@ -12,6 +12,8 @@ WORKSPACE_TIMEZONE=UTC
 
 #################### PHP7.2 ####################
 PHP72_VERSION=7.2
+PHP72_SWOOLE_VERSION=4.4.4
+PHP72_HIREDIS_VERSION=0.14.0
 
 
 #################### Nginx #####################
