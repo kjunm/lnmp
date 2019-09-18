@@ -98,6 +98,9 @@ RUN wget https://github.com/TarsPHP/tars-extension/archive/0.1.2.tar.gz -O  phpt
     && rm -r phptars \
     && docker-php-ext-enable phptars
 
+#sockets
+RUN docker-php-ext-install -j$(nproc) sockets
+
 USER root
 
 # Clean up
