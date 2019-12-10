@@ -15,7 +15,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 
 
 RUN apt-get update && \
-    apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
         curl \
         libmemcached-dev \
@@ -28,9 +27,7 @@ RUN apt-get update && \
         libmcrypt-dev \
     && rm -r /var/lib/apt/lists/*
 
-RUN set -xe; \
-    apt-get update -yqq && \
-    pecl channel-update pecl.php.net && \
+RUN pecl channel-update pecl.php.net && \
     apt-get install -yqq \
         apt-utils \
         libzip-dev zip unzip && \
@@ -82,21 +79,6 @@ RUN wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz 
     ) \
     && rm -r swoole \
     && docker-php-ext-enable swoole
-
-#phptars
-RUN wget https://github.com/TarsPHP/tars-extension/archive/0.1.2.tar.gz -O  phptars.tar.gz\
-    && mkdir -p phptars \
-    && tar -xf phptars.tar.gz -C phptars --strip-components=1 \
-    && rm phptars.tar.gz \
-    && ( \
-        cd phptars \
-        && phpize \
-        && ./configure \
-        && make -j$(nproc) \
-        && make install \
-    ) \
-    && rm -r phptars \
-    && docker-php-ext-enable phptars
 
 #sockets
 RUN docker-php-ext-install -j$(nproc) sockets
