@@ -15,6 +15,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 
 
 RUN apt-get update && \
+    apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
         curl \
         libmemcached-dev \
@@ -27,7 +28,9 @@ RUN apt-get update && \
         libmcrypt-dev \
     && rm -r /var/lib/apt/lists/*
 
-RUN pecl channel-update pecl.php.net && \
+RUN set -xe; \
+    apt-get update -yqq && \
+    pecl channel-update pecl.php.net && \
     apt-get install -yqq \
         apt-utils \
         libzip-dev zip unzip && \
