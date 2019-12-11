@@ -15,7 +15,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 
 
 RUN apt-get update && \
-    apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
         curl \
         libmemcached-dev \

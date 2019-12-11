@@ -1,5 +1,7 @@
 .idea
 .env
+/data/mysql/*
+/logs/nginx/*
 /nginx/ssl/*.crt
 /nginx/ssl/*.key
 /nginx/ssl/*.csr
