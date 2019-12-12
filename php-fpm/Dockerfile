@@ -5,11 +5,6 @@ LABEL maintainer="Wim <1404397383@qq.com>"
 ARG TZ
 
 
-RUN if [ "${ALPINE_REPOSITORIES}" != "" ]; then \
-        sed -i "s/dl-cdn.alpinelinux.org/${ALPINE_REPOSITORIES}/g" /etc/apk/repositories; \
-    fi
-
-
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone
 
@@ -25,7 +20,12 @@ RUN apt-get update && \
         libfreetype6-dev \
         libssl-dev \
         libmcrypt-dev \
-    && rm -r /var/lib/apt/lists/*
+    && rm -r /var/lib/apt/lists/* \
+    && pecl install grpc \
+    && pecl install protobuf
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+        && composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
 RUN set -xe; \
     apt-get update -yqq && \
@@ -39,6 +39,7 @@ RUN set -xe; \
         docker-php-ext-install opcache && \
         docker-php-ext-install mysqli && \
         docker-php-ext-install pdo_mysql &&\
+        docker-php-ext-install json &&\
         docker-php-ext-configure gd \
         --with-jpeg-dir=/usr/lib \
         --with-freetype-dir=/usr/include/freetype2 && \
@@ -80,7 +81,8 @@ RUN wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz 
         && make install \
     ) \
     && rm -r swoole \
-    && docker-php-ext-enable swoole
+    && docker-php-ext-enable swoole \
+    && echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
 
 #sockets
 RUN docker-php-ext-install -j$(nproc) sockets
