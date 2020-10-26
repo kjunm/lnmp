@@ -27,13 +27,13 @@ services:
     build:
       context: ./php-fpm
       args:
-        PHP_VERSION: ${PHP72_VERSION}
+        PHP_VERSION: ${PHP71_VERSION}
         TZ: "$TZ"
-        SWOOLE_VERSION: ${PHP72_SWOOLE_VERSION}
+        SWOOLE_VERSION: ${PHP71_SWOOLE_VERSION}
     container_name: wim_php
     restart: always
     volumes:
-      - ./php-fpm/php${PHP72_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
     expose:
       - "9000"
