@@ -11,7 +11,7 @@ TZ=Asia/Shanghai
 WORKSPACE_TIMEZONE=UTC
 
 #################### PHP ####################
-PHP_VERSION = 71
+PHP_VERSION = 7.1
 
 #################### PHP7.1 ####################
 PHP71_VERSION=7.1
