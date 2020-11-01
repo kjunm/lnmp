@@ -44,28 +44,15 @@ RUN printf "\n" | pecl install -o -f redis \
 
 RUN apt-get install -y  wget
 
-# Swoole extension
-ARG SWOOLE_VERSION
-RUN wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz -O swoole.tar.gz \
-    && mkdir -p swoole \
-    && tar -xf swoole.tar.gz -C swoole --strip-components=1 \
-    && rm swoole.tar.gz \
-    && ( \
-        cd swoole \
-        && phpize \
-        && ./configure --enable-async-redis --enable-mysqlnd --enable-openssl --enable-http2 \
-        && make -j$(nproc) \
-        && make install \
-    ) \
-    && rm -r swoole \
-    && docker-php-ext-enable swoole \
-    && echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
-
 #sockets
 RUN docker-php-ext-install -j$(nproc) sockets
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
         && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer
+
+#xdebug
+RUN  pecl install xdebug \
+    && docker-php-ext-enable xdebug
 
 USER root
 
