@@ -10,6 +10,10 @@ ALPINE_REPOSITORIES=mirrors.aliyun.com
 TZ=Asia/Shanghai
 WORKSPACE_TIMEZONE=UTC
 
+#################### PHP ####################
+PHP_VERSION=7.2
+PHP_HOST_LOG_PATH=./logs/php/
+
 #################### PHP7.2 ####################
 PHP72_VERSION=7.2
 PHP72_SWOOLE_VERSION=4.4.4

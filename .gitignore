@@ -8,3 +8,4 @@
 /nginx/ssl/*.csr
 .DS_Store
 .git/
+logs/php/xdebug.log

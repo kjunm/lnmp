@@ -10,6 +10,7 @@ services:
         - CHANGE_SOURCE=${CHANGE_SOURCE}
     container_name: wim_nginx
     restart: always
+    privileged: true
     volumes:
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
       - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
@@ -32,8 +33,11 @@ services:
         SWOOLE_VERSION: ${PHP72_SWOOLE_VERSION}
     container_name: wim_php
     restart: always
+    privileged: true
     volumes:
       - ./php-fpm/php${PHP72_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ./php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ${PHP_HOST_LOG_PATH}:/var/log/php
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
     expose:
       - "9000"
@@ -49,6 +53,7 @@ services:
         - MYSQL_VERSION=${MYSQL_VERSION}
     container_name: wim_mysql
     restart: always
+    privileged: true
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
