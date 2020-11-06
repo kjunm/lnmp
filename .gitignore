@@ -8,3 +8,6 @@
 /nginx/ssl/*.csr
 .DS_Store
 .git/
+nginx/sites/yii_front.conf
+.vscode/launch.json
+logs/

@@ -6,6 +6,11 @@ ARG TZ
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone
 
+#更新apt-get源 使用163的源
+RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
+    echo "deb https://mirrors.aliyun.com/debian  stable main contrib non-free" >/etc/apt/sources.list && \
+    echo "deb https://mirrors.aliyun.com/debian  stable-updates main contrib non-free" >>/etc/apt/sources.list
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         apt-utils \
@@ -66,6 +71,10 @@ RUN docker-php-ext-install -j$(nproc) sockets
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
         && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer
+
+#xdebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
 
 USER root
 
