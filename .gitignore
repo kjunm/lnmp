@@ -11,3 +11,4 @@
 nginx/sites/yii_front.conf
 .vscode/launch.json
 logs/
+.vscode/

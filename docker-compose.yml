@@ -31,6 +31,7 @@ services:
         PHP_VERSION: ${PHP_VERSION}
         TZ: "$TZ"
         SWOOLE_VERSION: ${PHP71_SWOOLE_VERSION}
+        XDEBUG_VERSION: ${PHP71_XDEBUG_VERSION}
     container_name: wim_php
     restart: always
     privileged: true

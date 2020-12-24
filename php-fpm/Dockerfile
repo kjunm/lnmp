@@ -13,35 +13,35 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        apt-utils \
-        curl \
-        libmemcached-dev \
-        libz-dev \
-        libpq-dev \
-        libjpeg-dev \
-        libpng-dev \
-        libfreetype6-dev \
-        libssl-dev \
-        libmcrypt-dev
+    apt-utils \
+    curl \
+    libmemcached-dev \
+    libz-dev \
+    libpq-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libfreetype6-dev \
+    libssl-dev \
+    libmcrypt-dev
 
 RUN set -xe; \
     apt-get update -yqq && \
     pecl channel-update pecl.php.net && \
     apt-get install -yqq \
-        libzip-dev zip unzip && \
-        docker-php-ext-configure zip --with-libzip && \
-        docker-php-ext-install zip && \
-        docker-php-ext-install bcmath && \
-        docker-php-ext-install opcache && \
-        docker-php-ext-install mysqli && \
-        docker-php-ext-install pdo_mysql &&\
-        docker-php-ext-install json &&\
-        docker-php-ext-configure gd \
-        --with-jpeg-dir=/usr/lib \
-        --with-freetype-dir=/usr/include/freetype2 && \
-        docker-php-ext-install gd && \
-        pecl install igbinary && \
-        docker-php-ext-enable igbinary
+    libzip-dev zip unzip && \
+    docker-php-ext-configure zip --with-libzip && \
+    docker-php-ext-install zip && \
+    docker-php-ext-install bcmath && \
+    docker-php-ext-install opcache && \
+    docker-php-ext-install mysqli && \
+    docker-php-ext-install pdo_mysql &&\
+    docker-php-ext-install json &&\
+    docker-php-ext-configure gd \
+    --with-jpeg-dir=/usr/lib \
+    --with-freetype-dir=/usr/include/freetype2 && \
+    docker-php-ext-install gd && \
+    pecl install igbinary && \
+    docker-php-ext-enable igbinary
 
 RUN printf "\n" | pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
@@ -56,11 +56,11 @@ RUN wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz 
     && tar -xf swoole.tar.gz -C swoole --strip-components=1 \
     && rm swoole.tar.gz \
     && ( \
-        cd swoole \
-        && phpize \
-        && ./configure --enable-async-redis --enable-mysqlnd --enable-openssl --enable-http2 \
-        && make -j$(nproc) \
-        && make install \
+    cd swoole \
+    && phpize \
+    && ./configure --enable-async-redis --enable-mysqlnd --enable-openssl --enable-http2 \
+    && make -j$(nproc) \
+    && make install \
     ) \
     && rm -r swoole \
     && docker-php-ext-enable swoole \
@@ -70,11 +70,31 @@ RUN wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz 
 RUN docker-php-ext-install -j$(nproc) sockets
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-        && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer
+    && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer
 
 #xdebug
-RUN pecl install xdebug \
+ARG XDEBUG_VERSION
+RUN pecl install xdebug-${XDEBUG_VERSION} \
     && docker-php-ext-enable xdebug
+
+#mongo
+RUN pecl install mongodb \
+    && docker-php-ext-enable mongodb
+
+#git
+RUN apt-get install -y git
+
+#memcached
+RUN pecl install memcached \
+    && docker-php-ext-enable memcached 
+
+#protobuf
+RUN pecl install protobuf \
+    && docker-php-ext-enable protobuf
+
+#grpc
+RUN pecl install grpc \
+    && docker-php-ext-enable grpc
 
 USER root
 
