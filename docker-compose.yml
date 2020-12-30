@@ -45,6 +45,7 @@ services:
       - net-php
       - net-mysql
       - net-redis
+      - custom-net
 
   mysql:
     build:
@@ -83,5 +84,8 @@ networks:
   net-php:
   net-mysql:
   net-redis:
+  custom-net:
+    external:
+      name: tesnet
 
 
