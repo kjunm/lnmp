@@ -6,5 +6,4 @@ data/*
 /nginx/ssl/*.key
 /nginx/ssl/*.csr
 .DS_Store
-www/*
 .git/
