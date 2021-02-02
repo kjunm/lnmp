@@ -11,8 +11,8 @@ TZ=Asia/Shanghai
 WORKSPACE_TIMEZONE=UTC
 
 #################### PHP ####################
-PHP_VERSION = 7.1
-PHP_LOG_PATH = ./logs/php/
+PHP_VERSION=7.1
+PHP_LOG_PATH=./logs/php/
 
 #################### PHP7.1 ####################
 PHP71_VERSION=7.1
@@ -50,9 +50,12 @@ MYSQL_DATABASE=default
 MYSQL_USER=wim
 MYSQL_PASSWORD=123456
 MYSQL_PORT=3306
-MYSQL_ROOT_PASSWORD=jj1218
+MYSQL_ROOT_PASSWORD=123456
 MYSQL_ENTRYPOINT_INITDB=./mysql/docker-entrypoint-initdb.d
 
 ### REDIS #################################################
 
 REDIS_PORT=6379
+
+##################### activitybackend-活动模板配置 #################################################
+SWOOLE_WS_PORT

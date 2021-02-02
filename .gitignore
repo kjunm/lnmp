@@ -8,7 +8,7 @@
 /nginx/ssl/*.csr
 .DS_Store
 .git/
-nginx/sites/yii_front.conf
+nginx/sites/*
 .vscode/launch.json
 logs/
 .vscode/
