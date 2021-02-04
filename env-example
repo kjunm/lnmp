@@ -58,4 +58,4 @@ MYSQL_ENTRYPOINT_INITDB=./mysql/docker-entrypoint-initdb.d
 REDIS_PORT=6379
 
 ##################### activitybackend-活动模板配置 #################################################
-SWOOLE_WS_PORT
+SWOOLE_WS_PORT=8230
