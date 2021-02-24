@@ -84,18 +84,6 @@ RUN pecl install mongodb \
 #git
 RUN apt-get install -y git
 
-#memcached
-RUN pecl install memcached \
-    && docker-php-ext-enable memcached 
-
-#protobuf
-RUN pecl install protobuf \
-    && docker-php-ext-enable protobuf
-
-#grpc
-RUN pecl install grpc \
-    && docker-php-ext-enable grpc
-
 USER root
 
 # Clean up
