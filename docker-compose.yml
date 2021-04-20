@@ -39,19 +39,19 @@ services:
       - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
       - ${PHP_LOG_PATH}:/var/log/php
-      - ~/.ssh:/tmp/.ssh
-    command:
-    - sh
-    - -c
-    - |
-      cp -R /tmp/.ssh ~/.ssh
-      chmod 755 ~/.ssh 
-      chmod 600 ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
-      tail -f /dev/null
+      - ~/.ssh:/root/.ssh
     ports: 
       - "${SWOOLE_WS_PORT}:8231"
     expose:
       - "9000"
+    # command:
+    #   - sh
+    #   - -c
+    #   - |
+    #     cp -R /tmp/.ssh ~/.ssh
+    #     chmod 755 ~/.ssh 
+    #     chmod 600 ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
+    #     tail -f /dev/null
     networks:
       - net-php
       - net-mysql
