@@ -70,7 +70,7 @@ RUN wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz 
 RUN docker-php-ext-install -j$(nproc) sockets
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer
+    && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer && composer self-update --1
 
 #xdebug
 ARG XDEBUG_VERSION
