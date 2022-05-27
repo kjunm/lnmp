@@ -39,7 +39,7 @@ services:
       - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
       - ${PHP_LOG_PATH}:/var/log/php
-      - ~/.ssh:/root/.ssh
+      - ~/.ssh:/tmp/.ssh
     ports: 
       - "${SWOOLE_WS_PORT}:8231"
     expose:
