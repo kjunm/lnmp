@@ -2,8 +2,14 @@
 logs/*
 data/*
 .env
+/www/*
+/data/mysql/*
+/logs/nginx/*
 /nginx/ssl/*.crt
 /nginx/ssl/*.key
 /nginx/ssl/*.csr
 .DS_Store
 .git/
+.vscode/launch.json
+logs/
+.vscode/

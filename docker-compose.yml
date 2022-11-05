@@ -10,6 +10,7 @@ services:
         - CHANGE_SOURCE=${CHANGE_SOURCE}
     container_name: wim_nginx
     restart: always
+    privileged: true
     volumes:
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
       - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
@@ -27,22 +28,35 @@ services:
     build:
       context: ./php-fpm
       args:
-        PHP_VERSION: ${PHP72_VERSION}
-        ALPINE_REPOSITORIES: ${ALPINE_REPOSITORIES}
+        PHP_VERSION: ${PHP_VERSION}
         TZ: "$TZ"
-        SWOOLE_VERSION: ${PHP72_SWOOLE_VERSION}
-        HIREDIS_VERSION: ${PHP72_HIREDIS_VERSION}
+        SWOOLE_VERSION: ${PHP71_SWOOLE_VERSION}
+        XDEBUG_VERSION: ${PHP71_XDEBUG_VERSION}
     container_name: wim_php
     restart: always
+    privileged: true
     volumes:
-      - ./php-fpm/php${PHP72_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
+      - ${PHP_LOG_PATH}:/var/log/php
+      - ~/.ssh:/tmp/.ssh
+    ports: 
+      - "${SWOOLE_WS_PORT}:8231"
     expose:
       - "9000"
+    # command:
+    #   - sh
+    #   - -c
+    #   - |
+    #     cp -R /tmp/.ssh ~/.ssh
+    #     chmod 755 ~/.ssh 
+    #     chmod 600 ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
+    #     tail -f /dev/null
     networks:
       - net-php
       - net-mysql
       - net-redis
+      - custom-net
 
   mysql:
     build:
@@ -51,6 +65,7 @@ services:
         - MYSQL_VERSION=${MYSQL_VERSION}
     container_name: wim_mysql
     restart: always
+    privileged: true
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
@@ -69,8 +84,10 @@ services:
     build: ./redis
     container_name: wim_redis
     restart: always
+    command: redis-server /usr/local/etc/redis/redis.conf
     volumes:
       - ${DATA_PATH_HOST}/redis:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - "${REDIS_PORT}:6379"
     networks:
@@ -99,5 +116,8 @@ networks:
   net-php:
   net-mysql:
   net-redis:
+  custom-net:
+    external:
+      name: tesnet
 
 
