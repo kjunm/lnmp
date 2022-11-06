@@ -49,30 +49,28 @@ RUN printf "\n" | pecl install -o -f redis \
 
 RUN apt-get install -y  wget
 
-# Swoole extension
-ARG SWOOLE_VERSION
-RUN wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz -O swoole.tar.gz \
-    && mkdir -p swoole \
-    && tar -xf swoole.tar.gz -C swoole --strip-components=1 \
-    && rm swoole.tar.gz \
-    && ( \
-    cd swoole \
-    && phpize \
-    && ./configure --enable-async-redis --enable-mysqlnd --enable-openssl --enable-http2 \
-    && make -j$(nproc) \
-    && make install \
-    ) \
-    && rm -r swoole \
-    && docker-php-ext-enable swoole \
-    && echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
+# # Swoole extension
+# ARG SWOOLE_VERSION
+# RUN wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz -O swoole.tar.gz \
+#     && mkdir -p swoole \
+#     && tar -xf swoole.tar.gz -C swoole --strip-components=1 \
+#     && rm swoole.tar.gz \
+#     && ( \
+#     cd swoole \
+#     && phpize \
+#     && ./configure --enable-async-redis --enable-mysqlnd --enable-openssl --enable-http2 \
+#     && make -j$(nproc) \
+#     && make install \
+#     ) \
+#     && rm -r swoole \
+#     && docker-php-ext-enable swoole \
+#     && echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
 
 #sockets
 RUN docker-php-ext-install -j$(nproc) sockets
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer \
-    && composer self-update --1 \ 
-    && composer global require "fxp/composer-asset-plugin:^1.4.1"
+    && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer 
 
 #xdebug
 ARG XDEBUG_VERSION
@@ -80,15 +78,15 @@ RUN pecl install xdebug-${XDEBUG_VERSION} \
     && docker-php-ext-enable xdebug
 
 #mongo
-RUN pecl install mongodb \
-    && docker-php-ext-enable mongodb
+# RUN pecl install mongodb \
+#     && docker-php-ext-enable mongodb
 
 #git
 RUN apt-get install -y git
 
-#memcached
-RUN pecl install memcached \
-    && docker-php-ext-enable memcached 
+# #memcached
+# RUN pecl install memcached \
+#     && docker-php-ext-enable memcached 
 
 #protobuf
 RUN pecl install protobuf \
