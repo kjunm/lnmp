@@ -77,16 +77,8 @@ ARG XDEBUG_VERSION
 RUN pecl install xdebug-${XDEBUG_VERSION} \
     && docker-php-ext-enable xdebug
 
-#mongo
-# RUN pecl install mongodb \
-#     && docker-php-ext-enable mongodb
-
 #git
 RUN apt-get install -y git
-
-# #memcached
-# RUN pecl install memcached \
-#     && docker-php-ext-enable memcached 
 
 #protobuf
 RUN pecl install protobuf \
@@ -95,6 +87,14 @@ RUN pecl install protobuf \
 #grpc
 RUN pecl install grpc \
     && docker-php-ext-enable grpc
+
+# #memcached
+RUN pecl install memcached \
+    && docker-php-ext-enable memcached 
+
+#mongo
+RUN pecl install mongodb-1.9.0 \
+    && docker-php-ext-enable mongodb
 
 USER root
 

@@ -99,7 +99,6 @@ networks:
   net-mysql:
   net-redis:
   custom-net:
-    external:
       name: tesnet
 
 
